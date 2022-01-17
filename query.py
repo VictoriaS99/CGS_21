@@ -28,9 +28,9 @@ def index():
 
                 """
                 
-                with open("../../nada",'r') as pwf:
+                with open("../../oracle",'r') as pwf:
                                 pw = pwf.read().strip()
-                conn = cx_Oracle.connect(dsn="geoslearn", user="s2236682", password=pw)
+                conn = cx_Oracle.connect(dsn="geoslearn", user="s1729202", password=pw)
                 c = conn.cursor()
                 c.execute("SELECT GREENSPACE_NAME FROM s2236682.GREENSPACE WHERE s2236682.GREENSPACE.GREENSPACE_ID > 0 ORDER BY s2236682.GREENSPACE.GREENSPACE_NAME")        
                 html = []
@@ -58,9 +58,9 @@ def dynamic_queries():
                 """
                 
                 #the same SQL query required to retain elements within drop-down menu (otherwise collapses after form is posted)
-                with open("../../nada",'r') as pwf:
+                with open("../../oracle",'r') as pwf:
                                 pw = pwf.read().strip()
-                conn = cx_Oracle.connect(dsn="geoslearn", user="s2236682", password=pw)
+                conn = cx_Oracle.connect(dsn="geoslearn", user="s1729202", password=pw)
                 c = conn.cursor()
                 c.execute("SELECT GREENSPACE_NAME FROM s2236682.GREENSPACE WHERE s2236682.GREENSPACE.GREENSPACE_ID > 0 ORDER BY s2236682.GREENSPACE.GREENSPACE_NAME")        
                 html = []
@@ -73,9 +73,9 @@ def dynamic_queries():
                 if request.method == 'POST':
                                 if request.form.get('service') == 'provisions':
                                                 query = request.form.get("greenspace")
-                                                with open("../../nada",'r') as pwf:
+                                                with open("../../oracle",'r') as pwf:
                                                                 pw = pwf.read().strip()
-                                                                conn = cx_Oracle.connect(dsn="geoslearn", user="s2236682", password=pw)
+                                                                conn = cx_Oracle.connect(dsn="geoslearn", user="s1729202", password=pw)
                                                                 c = conn.cursor()
                                                                 result = c.execute("SELECT s2236682.GREENSPACE.GREENSPACE_NAME, s2236682.AMENIT.BENCHES, s2236682.AMENIT.PLAY_AREA, s2236682.AMENIT.TOILETS, s2236682.AMENIT.BINS,s2236682.SAFET.CCTV, s2236682.SAFET.CRIME, s2236682.AESTHE.TREES, s2236682.AESTHE.CONSERVATION_AREA, s2236682.ACCESSI.CORE_PATHS FROM s2236682.GREENSPACE, s2236682.AMENIT, s2236682.AESTHE, s2236682.ACCESSI, s2236682.SAFET WHERE s2236682.GREENSPACE.GREENSPACE_ID = s2236682.AMENIT.GREENSPACE_ID AND s2236682.GREENSPACE.GREENSPACE_ID = s2236682.SAFET.GREENSPACE_ID AND s2236682.GREENSPACE.GREENSPACE_ID = s2236682.AESTHE.GREENSPACE_ID AND s2236682.GREENSPACE.GREENSPACE_ID = s2236682.ACCESSI.GREENSPACE_ID AND s2236682.GREENSPACE.GREENSPACE_NAME LIKE :query || '%'",{"query": str(query)}).fetchall()
                                                                 query = ''
@@ -84,9 +84,9 @@ def dynamic_queries():
                                                                 conn.close()
                                 elif request.form.get('service') == 'quality':
                                                 query = request.form.get("greenspace")
-                                                with open("../../nada",'r') as pwf:
+                                                with open("../../oracle",'r') as pwf:
                                                                 pw = pwf.read().strip()
-                                                                conn = cx_Oracle.connect(dsn="geoslearn", user="s2236682", password=pw)
+                                                                conn = cx_Oracle.connect(dsn="geoslearn", user="s1729202", password=pw)
                                                                 c = conn.cursor()
                                                                 #string interpolator for wildcard operator in SQL query
                                                                 result = c.execute("SELECT s2236682.GREENSPACE.GREENSPACE_NAME, s2236682.QUALI.QUALITY_SCORE, s2236682.QUALI.GRADE FROM s2236682.GREENSPACE, s2236682.QUALI WHERE s2236682.GREENSPACE.GREENSPACE_ID = s2236682.QUALI.GREENSPACE_ID AND s2236682.GREENSPACE.GREENSPACE_NAME LIKE :query || '%'",{"query": str(query)}).fetchall()
@@ -94,9 +94,9 @@ def dynamic_queries():
                                                                 conn.close()
                                 elif request.form.get('service') == 'serviceAreas':
                                                 query = request.form.get("greenspace")
-                                                with open("../../nada",'r') as pwf:
+                                                with open("../../oracle",'r') as pwf:
                                                                 pw = pwf.read().strip()
-                                                                conn = cx_Oracle.connect(dsn="geoslearn", user="s2236682", password=pw)
+                                                                conn = cx_Oracle.connect(dsn="geoslearn", user="s1729202", password=pw)
                                                                 c = conn.cursor()
                                                                 #string interpolator for wildcard operator in SQL query then retrieve all results
                                                                 result = c.execute("SELECT s2236682.DATAZ.DATAZONE_CODE, s2236682.DATAZ.DATAZONE_NAME FROM s2236682.GREENSPACE, s2236682.DATAZ WHERE s2236682.GREENSPACE.GREENSPACE_ID = s2236682.DATAZ.GREENSPACE_ID AND s2236682.GREENSPACE.GREENSPACE_NAME LIKE :query || '%'",{"query": str(query)}).fetchall()
